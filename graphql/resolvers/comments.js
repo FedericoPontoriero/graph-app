@@ -1,6 +1,6 @@
 const { AuthenticationError, UserInputError } = require('apollo-server');
-const checkAuth = require('../../util/check-auth');
 
+const checkAuth = require('../../util/check-auth');
 const Post = require('../../models/Post');
 
 module.exports = {
@@ -10,10 +10,11 @@ module.exports = {
 			if (body.trim() === '') {
 				throw new UserInputError('Empty comment', {
 					errors: {
-						body: 'Comment body must not be empty',
+						body: 'Comment body must not empty',
 					},
 				});
 			}
+
 			const post = await Post.findById(postId);
 
 			if (post) {
@@ -30,6 +31,7 @@ module.exports = {
 			const { username } = checkAuth(context);
 
 			const post = await Post.findById(postId);
+
 			if (post) {
 				const commentIndex = post.comments.findIndex(c => c.id === commentId);
 
